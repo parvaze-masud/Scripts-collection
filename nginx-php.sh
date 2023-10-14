@@ -88,6 +88,37 @@ curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 composer
 
+#MySQL Client installed:
+sudo yum install mysql  
+
+#Check remote db server connection
+sudo mysql -h 192.168.43.95 -u forum -p
+
+Deploy Laravel:
+
+sudo git clone https://github.com/parvaze-masud/php-laravel.git forum
+cd forum/
+cp .env.example .env
+vim .env
+
+################################################################
+APP_NAME=Laravel
+APP_ENV=production  ##Need to add production
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://forum.parvaze.com #Add user subdomain APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+#Database connection
+DB_CONNECTION=mysql
+DB_HOST=192.168.43.95
+DB_PORT=3306
+DB_DATABASE=forum
+DB_USERNAME=forum
+DB_PASSWORD='PRG@1qaz'
+##################################################################
+
 
 
 
