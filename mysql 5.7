@@ -56,7 +56,6 @@ mysql> GRANT ALL PRIVILEGES ON forum.* TO 'forum'@'%';
 mysql> FLUSH PRIVILEGES;
 
 #Firewall enable
-
 sudo firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address=192.168.43.94 port port=3306 protocol=tcp accept'
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-all
