@@ -39,8 +39,8 @@ sudo firewall-cmd --permanent --add-service=https
 
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 cd /etc/yum.repos.d/
-sudo yum-config-manager --enable remi-php74.repo  #command to enable 7.4 (not recommended)
 sudo vim remi-php74.repo        # or edit file to enable 7.4 (recommended)
+sudo yum-config-manager --enable remi-php74.repo  #command to enable 7.4 (not recommended)
 
 #############################################################################################################
 [remi-php74]
