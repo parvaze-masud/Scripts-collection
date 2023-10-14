@@ -96,7 +96,9 @@ sudo mysql -h 192.168.43.95 -u forum -p
 
 Deploy Laravel:
 
+cd /var/www/html/
 sudo git clone https://github.com/parvaze-masud/php-laravel.git forum
+sudo chown mas:mas forum/ -R
 cd forum/
 cp .env.example .env
 vim .env
@@ -118,6 +120,63 @@ DB_DATABASE=forum
 DB_USERNAME=forum
 DB_PASSWORD='PRG@1qaz'
 ##################################################################
+
+composer update --optimize-autoloader --no-dev
+php artisan key:gen
+php artisan migrate
+
+#Virtual Hosting
+cd /etc/nginx/conf.d/
+sudo vim forum.csl.com.conf
+########################################################################
+server {
+    listen 80;
+    server_name forum.csl.com;
+    root /var/www/html/forum/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+############################################################################################
+#virtual hosting script check
+sudo nginx -t
+sudo systemctl reload nginx
+
+#Set Permission
+sudo chown -R nginx:nginx /var/www/html/forum/storage/
+sudo chown -R nginx:nginx /var/www/html/forum/bootstrap/cache/
+
+cd /var/www/html
+sudo find forum/ -type f -exec chmod 644 {} \;
+sudo find forum/ -type d -exec chmod 755 {} \;
+
+cd /var/www/html/forum
+sudo chmod o+w storage/ -R
+
+
 
 
 
