@@ -104,7 +104,7 @@ Deploy Laravel:
 
 cd /var/www/html/
 sudo git clone https://github.com/parvaze-masud/php-laravel.git forum
-sudo chown mas:mas forum/ -R
+sudo chown mas:mas forum/ -R  #Must use
 cd forum/
 cp .env.example .env
 vim .env
@@ -126,7 +126,6 @@ DB_DATABASE=forum
 DB_USERNAME=forum
 DB_PASSWORD='PRG@1qaz'
 ##################################################################
-
 composer update --optimize-autoloader --no-dev
 php artisan key:gen
 php artisan migrate
