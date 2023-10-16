@@ -37,6 +37,12 @@ sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-all
 
+####################disable SeLinux#####################
+sestatus
+vim /etc/selinux/config
+SELINUX=disabled
+sudo reboot
+
 ####Install PHP 7.4:#######################
 
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -174,7 +180,8 @@ sudo find forum/ -type f -exec chmod 644 {} \;
 sudo find forum/ -type d -exec chmod 755 {} \;
 
 cd /var/www/html/forum
-sudo chmod o+w storage/ -R
+chmod 777 storage/ -R
+
 
 
 
