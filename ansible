@@ -82,8 +82,19 @@ mas@jenkins:~$ vim create-user.yml
 ###########################################
 mas@jenkins:~$ ansible-playbook create-user.yml
 
-
-
+mas@jenkins:~$ vim create-file.yml
+#########################################################
+---
+- name: Create a new file
+  hosts: appnode
+  become: true
+  tasks:
+  - name: creating file payment
+    file:
+      path: /opt/payment
+      state: touch
+############################################################
+mas@jenkins:~$ ansible-playbook create-file.yml
 
 
 
