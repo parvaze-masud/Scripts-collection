@@ -62,6 +62,7 @@ mas@jenkins:~$ ansible appnode -m apt -a "pkg=apache2 state=absent" -b  ### Remo
 #### User Create
 mas@jenkins:~$ ansible appnode -m user -a "name=parvaze" -b
 mas@jenkins:~$ ansible appnode -m command -a "tail -2 /etc/passwd" -b
+mas@jenkins:~$ ansible appnode -m user -a "name=parvaze state=absent" -b  ### For remove user
 
 
 
