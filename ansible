@@ -96,6 +96,33 @@ mas@jenkins:~$ vim create-file.yml
 ############################################################
 mas@jenkins:~$ ansible-playbook create-file.yml
 
+mas@jenkins:~$ vim install-package.yml
+###########################################################
+---
+- name: Install Apache2 and MariaDB
+  hosts: appnode
+  become: true
+  tasks:
+  - name: Install Apache2 and MariaDB packages
+    apt:
+      name:
+      - apache2
+      - mariadb-server
+
+  - name: Set MariaDB root password
+    mysql_user:
+      name: root
+      password: "PRG@1qaz"
+      state: present
+
+  - name: Start Apache2 and MariaDB services
+    service:
+      name:
+      - apache2
+      - mariadb
+      state: started
+#############################################################
+mas@jenkins:~$ ansible-playbook install-package.yml
 
 
 
