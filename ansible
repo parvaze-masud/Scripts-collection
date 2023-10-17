@@ -76,8 +76,16 @@ mas@jenkins:~$ vim create-user.yml
   become: yes
   tasks:
   - name: creating user june
-    user: name=june
+    user:
+      name: july
+
 ###########################################
 mas@jenkins:~$ ansible-playbook create-user.yml
+
+
+
+
+
+
 
 
