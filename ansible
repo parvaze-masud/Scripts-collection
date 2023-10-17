@@ -67,5 +67,7 @@ mas@jenkins:~$ ansible appnode -m user -a "name=parvaze state=absent" -b  ### Fo
 ### For remote server all info
 mas@jenkins:~$ ansible appnode -m setup
 
+################################ PlayBoook #######################################################
+
 
 
