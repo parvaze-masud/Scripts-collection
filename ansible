@@ -29,7 +29,15 @@ sudo_user      = root       ################
 #module_lang    = C
 #module_set_locale = False
 ############################################################
-##Host Patterns
+#Host details info
+mas@jenkins:/etc/ansible$ ansible all --list-hosts
+#specific group 
+mas@jenkins:/etc/ansible$ ansible appnode --list-hosts
+#Group first node
+mas@jenkins:/etc/ansible$ ansible appnode[0] --list-hosts
+
+#########Ad-Hoc Commands##############
+
 
 
 
