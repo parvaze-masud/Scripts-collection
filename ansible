@@ -49,7 +49,8 @@ mas@jenkins:~$ ansible all -m command -a "apt remove tree -y" -b
 mas@jenkins:~$ ansible appnode -m copy -a "src=test1 dest=/opt/ remote_src=yes" -b
 mas@jenkins:~$ ansible appnode -m copy -a "src=/home/mas/test1 dest=/opt/ remote_src=yes" -b
 
-
+#####Install apache2 package
+mas@jenkins:~$ ansible appnode -m apt -a "pkg=apache2 state=present" -b
 
 
 
