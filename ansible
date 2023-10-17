@@ -53,6 +53,8 @@ mas@jenkins:~$ ansible appnode -m copy -a "src=/home/mas/test1 dest=/opt/ remote
 mas@jenkins:~$ ansible appnode -m apt -a "pkg=apache2 state=present" -b
 mas@jenkins:~$ ansible appnode -m command -a "which apache2"
 
+####For apache2 update version
+mas@jenkins:~$ ansible appnode -m apt -a "pkg=apache2 state=latest" -b
 
 
 
