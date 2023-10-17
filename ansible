@@ -68,6 +68,16 @@ mas@jenkins:~$ ansible appnode -m user -a "name=parvaze state=absent" -b  ### Fo
 mas@jenkins:~$ ansible appnode -m setup
 
 ################################ PlayBoook #######################################################
-
+mas@jenkins:~$ vim create-user.yml
+###############################################
+---
+- name: Create User Playbook
+  hosts: appnode
+  become: yes
+  tasks:
+  - name: creating user june
+    user: name=june
+###########################################
+mas@jenkins:~$ ansible-playbook create-user.yml
 
 
