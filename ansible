@@ -37,6 +37,12 @@ mas@jenkins:/etc/ansible$ ansible appnode --list-hosts
 mas@jenkins:/etc/ansible$ ansible appnode[0] --list-hosts
 
 #########Ad-Hoc Commands##############
+mas@jenkins:~$ ansible all -m command -a "ls -a"
+mas@jenkins:~$ ansible all -m command -a "sudo touch /opt/test"
+mas@jenkins:~$ ansible all -m command -a "apt install tree -y" -b   # -b means become root
+mas@jenkins:~$ ansible all -m command -a "apt remove tree -y" -b
+
+
 
 
 
