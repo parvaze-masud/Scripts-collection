@@ -59,3 +59,4 @@ mas@jenkins:~$ ansible appnode -m apt -a "pkg=apache2 state=latest" -b
 
 
 
+
