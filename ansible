@@ -1,0 +1,36 @@
+mas@jenkins:~$ sudo apt install ansible -y
+mas@jenkins:~$ cd /etc/ansible/
+mas@jenkins:/etc/ansible$ sudo vim hosts
+############################################
+# Ex 1: Ungrouped hosts, specify before any group headers.
+[app-node]
+192.168.3.113
+
+[dbserver]
+###############################################
+
+mas@jenkins:/etc/ansible$ sudo vim ansible.cfg
+###################################################
+# some basic default values...
+
+inventory      = /etc/ansible/hosts          ###################
+#library        = /usr/share/my_modules/
+#module_utils   = /usr/share/my_module_utils/
+#remote_tmp     = ~/.ansible/tmp
+#local_tmp      = ~/.ansible/tmp
+#plugin_filters_cfg = /etc/ansible/plugin_filters.yml
+#forks          = 5
+#poll_interval  = 15
+sudo_user      = root       ################
+#ask_sudo_pass = True
+#ask_pass      = True
+#transport      = smart
+#remote_port    = 22
+#module_lang    = C
+#module_set_locale = False
+############################################################
+##Host Patterns
+
+
+
+
