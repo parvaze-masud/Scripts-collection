@@ -38,11 +38,16 @@ mas@jenkins:/etc/ansible$ ansible appnode[0] --list-hosts
 
 #########Ad-Hoc Commands##############
 mas@jenkins:~$ ansible all -m command -a "ls -a"
+#####Create a new file
 mas@jenkins:~$ ansible all -m command -a "sudo touch /opt/test"
+
+######Install & remove package
 mas@jenkins:~$ ansible all -m command -a "apt install tree -y" -b   # -b means become root
 mas@jenkins:~$ ansible all -m command -a "apt remove tree -y" -b
 
-
+#####Copy File one location to another
+mas@jenkins:~$ ansible appnode -m copy -a "src=test1 dest=/opt/ remote_src=yes" -b
+mas@jenkins:~$ ansible appnode -m copy -a "src=/home/mas/test1 dest=/opt/ remote_src=yes" -b
 
 
 
