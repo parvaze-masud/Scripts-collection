@@ -23,7 +23,7 @@ PasswordAuthentication yes   ##################
 root@ip-192-168-3-41:~# sudo service sshd reload
 
 ###### password less authentication for only master node ################
-mas@ip-192-168-3-219:~$ ssh-keygen
+mas@ip-192-168-3-219:~$ ssh-keygen         #switch to mas user
 mas@ip-192-168-3-219:~$ cd .ssh/
 mas@ip-192-168-3-219:~/.ssh$ ls
 mas@ip-192-168-3-219:~/ ssh-copy-id mas@192.168.3.231
