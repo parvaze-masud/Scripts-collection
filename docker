@@ -1,2 +1,5 @@
+#Create a volume (default path /var/lib/docker/volume/)
+docker volume create docker-data
+
 #Container run command
 docker run -it -d -p 8000:8000 --name nodeapp-cont -v docker-data:/app 17433d12557b
