@@ -6,3 +6,6 @@ docker run -it -d -p 8000:8000 --name nodeapp-cont -v docker-data:/app 17433d125
 
 #Container Stop and remove 
 docker stop 40a1adaefed8 && docker rm 40a1adaefed8
+
+#Container Access
+docker exec -it 0dd54d8cca38 /bin/bash
