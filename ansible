@@ -123,7 +123,3 @@ mas@jenkins:~$ vim install-package.yml
       state: started
 #############################################################
 mas@jenkins:~$ ansible-playbook install-package.yml
-
-
-
-
