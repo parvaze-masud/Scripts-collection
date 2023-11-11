@@ -1,4 +1,4 @@
-First of all, prepare 3 VM’s with ubuntu latest LTS version. I am using ubuntu 20.04 LTS. Setup the VMs 
+## First of all, prepare 3 VM’s with ubuntu latest LTS version. I am using ubuntu 20.04 LTS. Setup the VMs 
 with suitable ip address which can be remembered,
 
 parvaze@parvaze:~$ cd /etc/netplan/
@@ -31,6 +31,33 @@ root@master:~# vim /etc/hosts
 192.168.43.90 master
 192.168.43.91 k-node1
 192.168.43.92 k-node2
+
+## Update the apt package index and install packages needed to use the Kubernetes apt repository
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+cd /etc/apt/
+## create the keyrings directory inside /etc/apt/ to store the key
+sudo mkdir keyrings
+
+## Download the public signing key for the Kubernetes package repositories. The same signing key is used for all repositories so you can disregard the version in the URL
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+## To update to the latest version
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+## To check for for the Kubernetes repository
+cat /etc/apt/sources.list
+
+## We need to install Docker or any CRI (Container Runtime Interface) before installing Kubernetes
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+sudo apt install docker-ce -y
+systemctl enable docker
+systemctl start docker
+systemctl status docker
 
 ## You need to do the following steps on the other machines as well. So, do the exact same thing till 
 installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and slave2)
