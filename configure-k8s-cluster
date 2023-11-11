@@ -66,7 +66,7 @@ installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and s
 root@master:~# vim /etc/fstab
 ## add # to the swap line 
 
-## After that
+## After that Paste all these commands.
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
@@ -76,6 +76,12 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
 sudo sysctl --system
+
+## Now, reboot the machines. After rebooting and installing Kubernetes, #install kubeadm, kubelet and kubectl
+
+sudo apt-get install kubeadm kubelet kubectl -y
+rm /etc/containerd/config.toml
+systemctl restart containerd
 
 
 
