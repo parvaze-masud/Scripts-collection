@@ -27,6 +27,16 @@ parvaze@parvaze:/etc/netplan$ sudo apt-get update
 parvaze@parvaze:/etc/netplan$ hostnamectl set-hostname master
 
 
+root@master:~# vim /etc/hosts
+192.168.43.90 master
+192.168.43.91 k-node1
+192.168.43.92 k-node2
+
+## You need to do the following steps on the other machines as well. So, do the exact same thing till 
+installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and slave2)
+
+## Turn the swap off
+root@master:~# vim /etc/fstab
 
 
 
