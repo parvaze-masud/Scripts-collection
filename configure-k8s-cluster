@@ -15,17 +15,16 @@ network:
               addresses: [8.8.8.8]
   version: 2
 #####################################################################
+
+## The new IP address will be applied.
 parvaze@parvaze:/etc/netplan$ netplan try
 parvaze@parvaze:/etc/netplan$ netplan apply
 
-#The new ip address will be applied.
-
 parvaze@parvaze:/etc/netplan$ sudo apt-get update
 
-##Then set the hostname accordingly to your preference, I will be using one master and two slave nodes.
+##Then set the hostname according to your preference, I will be using one master and two slave nodes.
 
 parvaze@parvaze:/etc/netplan$ hostnamectl set-hostname master
-
 
 root@master:~# vim /etc/hosts
 192.168.43.90 master
