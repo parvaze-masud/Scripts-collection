@@ -82,8 +82,9 @@ systemctl restart containerd
 ## You need to do the following steps on the other machines as well. So, do the exact same thing till 
 installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and slave2)
 
+## Only Master Node
 
-
+parvaze@master:~$ sudo kubeadm init
 
 
 
