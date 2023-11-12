@@ -58,9 +58,6 @@ systemctl enable docker
 systemctl start docker
 systemctl status docker
 
-## You need to do the following steps on the other machines as well. So, do the exact same thing till 
-installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and slave2)
-
 ## Turn the swap off
 root@master:~# vim /etc/fstab
 ## add # to the swap line 
@@ -82,7 +79,8 @@ sudo apt-get install kubeadm kubelet kubectl -y
 rm /etc/containerd/config.toml
 systemctl restart containerd
 
-
+## You need to do the following steps on the other machines as well. So, do the exact same thing till 
+installing kubeadm,kubelet and kubectl on all the machines (Master, slave1 and slave2)
 
 
 
