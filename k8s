@@ -50,7 +50,7 @@ CONFIGURE WORKER NODES (IN NODES)
 
 COPY LONG CODE PROVIDED MY MASTER IN NODE NOW LIKE CODE GIVEN BELOW
 
-e.g- kubeadm join 172.31.6.165:6443 --token kl9fhu.co2n90v3rxtqllrs --discovery-token-ca-cert-hash sha256:b0f8003d23dbf445e0132a53d7aa1922bdef8d553d9eca06e65c928322b3e7c0
+kubeadm join 192.168.43.90:6443 --token tfyy3e.tz1fe23itjxy6syv --discovery-token-ca-cert-hash sha256:90ff78e1df4cb609730bac4c0eaf8d0d0a695c933ef939033e7468e591a2a381
 
 GO TO MASTER AND RUN THIS COMMAND
 kubectl get nodes
