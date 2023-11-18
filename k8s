@@ -83,5 +83,8 @@ kubectl logs -f frontend -c ubuntuos
 ## Check Pod and container IP
 kubectl exec frontend -c ubuntuos -- hostname -i
 
+## GO to container inside # container name = nginx, pod name = frontend
+kubectl exec frontend -it -c nginx -- /bin/bash
+
 
 **********************END************************************
