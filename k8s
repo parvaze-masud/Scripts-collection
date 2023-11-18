@@ -135,5 +135,24 @@ kubectl get pod -l env!=prod
 ## Set a lavel on nodes
 kubectl label nodes k-node2 name=k-node2
 
+## Node Selector
+###################################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector-pod
+  labels:
+    env: prod
+    class: pods
+spec:
+  containers:
+    - name: nodeselector-cont
+      image: httpd
+      ports:
+        - containerPort: 80
+  nodeSelector:
+    name: k-node2
+#########################################################
+
 
 **********************END************************************
