@@ -78,7 +78,10 @@ status: {}
 kubectl apply -f multicont.yaml
 
 ## Check container log # pod name = frontend , container = ubuntuos 
-kubectl logs -f frontend -c ubuntuos  
+kubectl logs -f frontend -c ubuntuos
+
+## Check Pod and container IP
+kubectl exec frontend -c ubuntuos -- hostname -i
 
 
 **********************END************************************
