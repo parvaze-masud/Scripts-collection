@@ -136,6 +136,7 @@ kubectl get pod -l env!=prod
 kubectl label nodes k-node2 name=k-node2
 
 ## Node Selector
+vim nodeselector.yaml
 ###################################################
 apiVersion: v1
 kind: Pod
@@ -153,6 +154,6 @@ spec:
   nodeSelector:
     name: k-node2
 #########################################################
-
+kubectl apply -f nodeselector.yaml
 
 **********************END************************************
