@@ -103,7 +103,24 @@ spec:
       ports:
         - containerPort: 80
 #################################################
-
+## Set levels
+#############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: phpapp-pod
+  labels:
+    env: prod
+    class: pods
+spec:
+  containers:
+    - name: phpapp-cont
+      image: httpd
+      ports:
+        - containerPort: 80
+################################################
+## Check levels
+kubectl get pod --show-labels
 
 
 **********************END************************************
