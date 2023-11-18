@@ -86,5 +86,8 @@ kubectl exec frontend -c ubuntuos -- hostname -i
 ## GO to container inside # container name = nginx, pod name = frontend
 kubectl exec frontend -it -c nginx -- /bin/bash
 
+## Delete Pod
+kubectl delete pod frontend
+
 
 **********************END************************************
