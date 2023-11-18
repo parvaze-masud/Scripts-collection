@@ -77,5 +77,8 @@ status: {}
 ##############################################################
 kubectl apply -f multicont.yaml
 
+## Check container log # pod name = frontend , container = ubuntuos 
+kubectl logs -f frontend -c ubuntuos  
+
 
 **********************END************************************
