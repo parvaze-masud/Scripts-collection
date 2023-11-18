@@ -126,5 +126,7 @@ kubectl label pod phpapp-pod type=pods
 ## Check levels
 kubectl get pod --show-labels
 
+kubectl get pod -l env=prod
+
 
 **********************END************************************
