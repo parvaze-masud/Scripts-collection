@@ -132,5 +132,8 @@ kubectl get pod -l env=prod
 ## if not equal then find other pods
 kubectl get pod -l env!=prod
 
+## Set a lavel on nodes
+kubectl label nodes k-node2 name=k-node2
+
 
 **********************END************************************
