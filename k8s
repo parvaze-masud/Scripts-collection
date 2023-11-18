@@ -126,7 +126,11 @@ kubectl label pod phpapp-pod type=pods
 ## Check levels
 kubectl get pod --show-labels
 
+## Using -l to select exact pods
 kubectl get pod -l env=prod
+
+## if not equal then find other pods
+kubectl get pod -l env!=prod
 
 
 **********************END************************************
