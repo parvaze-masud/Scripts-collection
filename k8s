@@ -103,7 +103,7 @@ spec:
       ports:
         - containerPort: 80
 #################################################
-## Set levels
+## Set levels (Declarative Method)
 #############################################
 apiVersion: v1
 kind: Pod
@@ -119,6 +119,10 @@ spec:
       ports:
         - containerPort: 80
 ################################################
+
+## Set Levels (Imperative Methods)
+kubectl label pod phpapp-pod type=pods
+
 ## Check levels
 kubectl get pod --show-labels
 
