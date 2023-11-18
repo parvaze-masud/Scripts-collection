@@ -89,5 +89,21 @@ kubectl exec frontend -it -c nginx -- /bin/bash
 ## Delete Pod
 kubectl delete pod frontend
 
+## Expose port
+vim multicont.yaml
+##############################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+    - name: phpapp
+      image: httpd
+      ports:
+        - containerPort: 80
+#################################################
+
+
 
 **********************END************************************
