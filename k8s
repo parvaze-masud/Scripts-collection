@@ -52,7 +52,30 @@ COPY LONG CODE PROVIDED MY MASTER IN NODE NOW LIKE CODE GIVEN BELOW
 
 kubeadm join 192.168.43.90:6443 --token tfyy3e.tz1fe23itjxy6syv --discovery-token-ca-cert-hash sha256:90ff78e1df4cb609730bac4c0eaf8d0d0a695c933ef939033e7468e591a2a381
 
-GO TO MASTER AND RUN THIS COMMAND
+## GO TO MASTER AND RUN THIS COMMAND
 kubectl get nodes
+
+## Create a pod form a yaml file
+vim multicont.yaml
+########################################################
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+    type: prod
+  name: frontend
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+##############################################################
+kubectl apply -f multicont.yaml
+
 
 **********************END************************************
