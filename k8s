@@ -135,7 +135,7 @@ kubectl get pod -l env!=prod
 ## Set a lavel on nodes
 kubectl label nodes k-node2 name=k-node2
 
-## Node Selector
+## NODE SELECTOR EXAMPLE
 vim nodeselector.yaml
 ###################################################
 apiVersion: v1
@@ -155,5 +155,29 @@ spec:
     name: k-node2
 #########################################################
 kubectl apply -f nodeselector.yaml
+
+## EXAMPLE OF REPLICATION CONTROLLER
+vim rc.yaml
+#####################################################
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: aci-frontend
+spec:
+  replicas: 4
+  selector:
+    name: aci
+  template:
+    metadata:
+      name: aci-pod
+      labels:
+        name: aci
+    spec:
+      containers:
+        - name: aci-cont
+          image: httpd
+########################################################
+kubectl apply -f rc.yaml
+kubectl describe rc aci-frontend
 
 **********************END************************************
