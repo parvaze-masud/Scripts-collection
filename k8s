@@ -190,18 +190,4 @@ kubectl get pod --show-labels
 kubectl exec networktest -it -c networktest-cont1 -- /bin/bash
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 **********************END************************************
