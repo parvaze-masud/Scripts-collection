@@ -181,4 +181,9 @@ kubectl apply -f rc.yaml
 kubectl describe rc aci-frontend
 kubectl get pod --show-labels
 
+## For Scaleup 
+kubectl scale --replicas=10 rc -l name=aci
+kubectl get rc
+kubectl get pod --show-labels
+
 **********************END************************************
