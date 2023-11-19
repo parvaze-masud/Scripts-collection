@@ -179,5 +179,6 @@ spec:
 ########################################################
 kubectl apply -f rc.yaml
 kubectl describe rc aci-frontend
+kubectl get pod --show-labels
 
 **********************END************************************
