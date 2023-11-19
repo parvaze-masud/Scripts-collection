@@ -186,7 +186,8 @@ kubectl scale --replicas=10 rc -l name=aci
 kubectl get rc
 kubectl get pod --show-labels
 
-
+## Go inside any container
+kubectl exec networktest -it -c networktest-cont1 -- /bin/bash
 
 
 
