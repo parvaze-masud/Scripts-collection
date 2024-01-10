@@ -1,0 +1,45 @@
+আমাদের লেখা Ansible প্লেবুক যখন ঠিকমত কাজ করে না, তখন Error Handle করার জন্য Ansible-এ বেশ কিছু পদ্ধতি রয়েছে। এর মধ্যে সবচেয়ে সহজ এবং কমন হচ্ছেঃ
+
+* Ignore_errors,
+* failed_when, 
+* rescue blocks এবং 
+* retries with until
+
+Ignore_errors ব্যবহার করা হয় যখন Error হওয়াটা প্রত্যাশিত এবং আমরা Error গ্রহণ করে সামনে এগিয়ে যেতে চাই। যেমনঃ
+
+- name: This task might fail but that's okay
+ command: /bin/false
+ ignore_errors: yes
+
+যদি কাস্টম কোন লজিকের কারণে আমাদের টাস্কের Success/Failed এক্সিট স্ট্যাটাসের উপর ডিপেন্ড না করে, বরং কোন টেক্সটের ওপর ডিপেন্ড করে তখন আমরা সেসব Error Handle করার জন্য failed_when ব্যবহার করতে পারি।
+
+- name: Mark task as failed under certain conditions
+ command: /bin/something
+ register: result
+ failed_when: '"ERROR" in result.stderr'
+
+আমাদের টার্গেটেড টাস্ক যদি ফেইল করে, এবং শুধুমাত্র ফেইল করলে আমরা যদি আরেকটি টাস্ক রান করাতে চাই, তাহলে rescue block ব্যবহার করা যেতে পারে।
+
+- name: Handle errors with block
+ block:
+ - name: Task that might fail
+ command: /bin/false
+ rescue:
+ - name: Task to run if a failure occurs
+ debug:
+ msg: "An error occurred"
+
+যে টাস্কগুলো নেটওয়ার্ক অথবা অন্যকিছুর উপর নির্ভর করে, এবং ফেইল করার পর, আবার চেষ্টা করলে Success হয়, সেসব ক্ষেত্রে retries until ব্যবহার করা যায়ঃ
+
+- name: Retry task until it succeeds
+ command: /bin/something
+ register: result
+ until: result.rc == 0
+ retries: 5
+ delay: 10
+
+
+
+
+
+
