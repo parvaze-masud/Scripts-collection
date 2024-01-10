@@ -1,0 +1,48 @@
+যেকোন ডকার ইমেজ বানানোর জন্য দরকার হচ্ছে ডকারফাইল। কিন্তু ডকারফাইলের সিকিউরিটি- Efficiency এর  বিষয়টি অনেকসময়ই ignore করে যাওয়া হয়, যেটি পরবর্তীতে বিভিন্ন ধরনের সমস্যা তৈরি করে। 
+
+ডকারফাইল সিকিউর এবং Efficient করার জন্য যে বেস্ট প্র্যাকটিসগুলো ফলো  করা যেতে পারেঃ 
+১. ট্রাস্টেড বেস ইমেজঃ সবসময় একটি সিকিউর এবং অফিসিয়াল বেস ইমেজ নিয়ে শুরু করা উচিত
+২. সিক্রেটসের ব্যবহার avoid করাঃ সেনসিটিভ ইনফরমেশন ডকারফাইলে লেখা থেকে বিরত থাকতে হবে। 
+৩. নন-রুট ইউজারের ব্যবহারঃ কন্টেইনার নন-রুট ইউজার দিয়ে চালানো ভালো। 
+৪. নিয়মিত ইমেজ আপডেট করাঃ বেইস ইমেজ নিয়মিত আপডেট করা সিকিউরিটি প্যাচ গুলো পাওয়ার জন্য। 
+
+একটি ডকারফাইল বেস্ট প্র্যাকটিস  ছাড়াঃ
+FROM node:14
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 3000
+CMD ["node", "app.js"]
+
+ডকারফাইল বেস্ট প্র্যাকটিস সহঃ 
+# Use a specific tag for a known stable version
+FROM node:14-alpine3.12
+# Set a non-root user and switch to it
+RUN adduser -D nonroot
+USER nonroot
+# Only copy the package.json and package-lock.json initially
+WORKDIR /app
+COPY package*.json ./
+# Install dependencies
+RUN npm ci --only=production
+# Copy the rest of the application
+COPY --chown=nonroot:nonroot . .
+# Expose the port the app runs on
+EXPOSE 3000
+# Define the command to run the app
+CMD ["node", "app.js"]
+
+ইম্প্রুভমেন্টসঃ 
+১. বেস ইমেজ মিনিমাল নেওয়া।
+২. নন-রুট ইউজার ব্যবহার করা। 
+৩. ইফেসিয়েন্ট লেয়ারিং করা (package.json আগে কপি করা, ডকার যেন তার cache ব্যবহার করতে পারে। 
+৪. ফাইল ownership নন-রুট রাখা। 
+
+
+
+
+
+
+
+
+
