@@ -1,0 +1,48 @@
+Kubernetes এর ইকোসিস্টেমে Probes হচ্ছে অনেকটা গোয়েন্দার মত, যে খুঁজে বের করে আমাদের এপ্লিকেশনগুলো চলছে কিনা ঠিকঠাক, নাকি কোন ঝামেলা আছে। 
+
+তিন ধরনের Prob আছেঃ 
+১. Liveness Prob
+২. Readiness Prob
+৩. Startup Prob
+
+Liveness Prob এর কাজ কি? 
+এটি হেলথ চেকের মাধ্যমে বুঝে Container এর মধ্যে আমাদের এপ্লিকেশন ঠিক মত চলছে কিনা, নাকি কোন বাগ অথবা ডেডলক টাইপের কিছুর জন্য এপ্লিকেশন হ্যাং হয়ে বসে আছে। যদি এপ্লিকেশন হ্যাং হয়ে থাকে তাহলে Liveness Prob ফেইল করে, এবং Kubelet তাকে রিস্টার্ট করে দিতে পারে। 
+
+Readiness Prob কি?
+আমাদের এপ্লিকেশনটি ট্রাফিক একসেপ্ট করার জন্য প্রস্তুত কিনা সেটি নির্ধারন করতে পারে Readiness Prob. যদি Readiness Prob ফেইল করে তাহলে  Pod-টিকে  সার্ভিস load balancer থেকে রিমুভ করে দেওয়া হয়। 
+
+এবং Startup Prob?
+এপ্লিকেশনটা রানিং কিনা সেটি প্রথম চেক করে Startup Prob। যদি Startup Prob সবুজ সংকেত দেয় তাহলে অন্যান্য Prob গুলো কাজ শুরু করে। 
+
+নিচের স্যাম্পলটিতে 
+
+spec:
+ containers:
+ - name: myapp-container
+ image: myapp:1.0
+ ports:
+ - containerPort: 80
+ startupProbe:
+ httpGet:
+ path: /start
+ port: 80
+ failureThreshold: 30
+ periodSeconds: 10
+ livenessProbe:
+ httpGet:
+ path: /healthz
+ port: 80
+ initialDelaySeconds: 15
+ periodSeconds: 20
+ readinessProbe:
+ httpGet:
+ path: /readiness
+ port: 80
+ initialDelaySeconds: 5
+ periodSeconds: 5
+
+
+Startup prob প্রতি ১০ সেকেন্ডে /start এন্ডপয়েন্টটি চেক করে, যদি ৩০ বার এই চেক ফেইল করে তাহলে container রিস্টার্ট করে দিতে পারে kubelet। 
+
+Startup Prob পরে ১৫ সেকেন্ড অপেক্ষা করে প্রতি ২০ সেকেন্ড পর পর liveness prob তার চেকিং শুরু করবে। যেহেতু আমরা liveness এর জন্য কোন failure threshold বলে দেইনি, সেহেতু ৩ বার (ডিফল্ট ভ্যালু) ফেইল করলে কন্টেইনার রিস্টার্ট করে দিবে kubelet। 
+এবং Readiness Prob ৫ সেকেন্ড পর থেকে স্টার্ট করবে তার কাজ, এবং প্রতি ৫ সেকেন্ড পর পর চেক করে যাবে। ফেইল করলে ট্রাফিক নেওয়া বন্ধ করে দিবে। 
