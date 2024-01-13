@@ -1,0 +1,34 @@
+একসাথে কয়েকটি কন্টেইনার রান করার জন্য docker compose খুবই কার্যকরী একটি টুল। Docker compose এর ব্যবহারকে আরও অপটিমাইজ করতে নিচের কাজগুলো করা যেতে পারেঃ 
+
+১। নতুন ফিচার/ইম্প্রুভমেন্ট গুলো পেতে লেটেস্ট ভার্সন ব্যবহার করা। যেমনঃ 
+version: '3.8'
+২। স্পষ্টভাবে সার্ভিসগুলো ডিফাইন করা যেন সহজে বুঝা যায় কোনটা কি। যেমনঃ 
+services:
+ web:
+ # service definition
+ db:
+ # service definition
+
+৩। অফিসিয়াল ইমেজ ব্যবহার করা
+৪। সেনসিটিভ ইনফরমেশনের জন্য Environment variable ব্যবহার করাঃ 
+environment:
+ POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+৫। Data যেন Persist করে সেজন্য ভলিউম ব্যবহার করা। 
+৬। সিপিউ, মেমোরি লিমিট দেওয়া যেতে পারে প্রয়োজন অনুযায়ীঃ 
+deploy:
+ resources:
+ limits:
+ cpus: '0.5'
+ memory: 250M
+
+৭। সার্ভিসের অবস্থা সম্পর্কে জানতে healthcheck এড করাঃ 
+healthcheck:
+ test: ["CMD", "curl", "-f", "http://localhost"]
+
+৮। লগিং ডিফাইন করাঃ 
+logging:
+ driver: json-file
+ options:
+ max-size: "200k"
+ max-file: "10"
