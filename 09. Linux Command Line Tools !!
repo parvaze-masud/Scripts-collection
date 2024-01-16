@@ -1,0 +1,55 @@
+লিনাক্সের কিছু খুবই ছোট,সাধারণ কিন্তু পাওয়ারফুল টুল আছে। এই টুলগুলো টেক্সট প্রোসেসিং, সিস্টেম এডমিনিস্ট্রেশন, এবং আরও বিভিন্ন কাজে অসধারণ ভূমিকা রাখতে পারে। যেমনঃ 
+
+১। grep: 
+Purpose: Regular Expression দিয়ে একটি ফাইলের মধ্যে প্যাটার্ন সার্চ করতে পারে 
+Common Usage: grep [options] pattern [files]
+Example: grep "error" log.txt - এই কমান্ডটি log.txt এর ভিতর “error‘ ওয়ার্ডটি আছে এমন সকল লাইন খুঁজে বের করে আনবে। 
+
+২। sed: 
+Purpose: টেক্সট চেঞ্জ করার একটি টুল। 
+Common Usage: sed [options] 'script' [inputfile]
+Example: sed 's/old/new/g' file.txt - এটি file.txt তে থাকা সকল old ওয়ার্ডকে new দিয়ে রিপ্লেস করে দিবে। 
+
+৩। awk:
+Purpose: ডেটা extraction, রিপোর্টিং। 
+Common Usage: awk [options] 'program' file
+Example: awk '{print $1}' file.txt - এটি file.txt এর প্রত্যেক লাইনের প্রথম ওয়ার্ডটি প্রিন্ট করবে। 
+
+৪। sort
+Purpose: টেক্সট ফাইলের লাইন সর্ট করা। 
+Common Usage: sort [options] [file...]
+Example: sort file.txt - file.txt এর সকল লাইন alphabetically সর্ট করে। 
+
+৫। cat
+Purpose: ফাইলের কন্টেন্ট প্রিন্ট করা। 
+Common Usage: cat [options] [file...]
+Example: cat file1.txt file2.txt – file1 এবং file2 এর কন্টেন্ট প্রিন্ট করে। 
+
+৬। tail
+Purpose: ফাইলের লাস্ট পার্ট ডিসপ্লে করে
+Common Usage: tail [options] [file]
+Example: tail -n 5 file.txt – file.txt এর লাস্ট ৫ লাইন ডিসপ্লে করে। 
+
+৭। head
+Purpose: ফাইলের প্রথম পার্ট ডিসপ্লে করে 
+Common Usage: head [options] [file]
+Example: head -n 5 file.txt –  file.txt এর প্রথম ৫ লাইন ডিসপ্লে করে। 
+
+৮। find
+Purpose: একটি ফোল্ডারের ভিতর ফাইল সার্চ করা 
+Common Usage: find [path...] [expression] 
+Example: find /home -name "*.txt - /home ফোল্ডারের ভিতরের (সাব ফোল্ডারসহ) সকল .txt ফাইল সার্চ করে। 
+
+৯। diff
+Purpose: লাইন বাই লাইন কম্পেয়ার করা। 
+Common Usage: diff [options] file1 file2 
+Example: diff old.txt new.txt – old.txt এবং new.txt এর মধ্যকার পার্থক্য দেখায়। 
+
+১০।  xargs
+Purpose: স্টান্ডার্ড আউটপুট থেকে কমান্ড বিল্ড করে এক্সিকিউট করা। 
+Common Usage: xargs [options] [command] 
+Example: find /home -type f -name "*.txt" | xargs grep "searchText" - .txt দিয়ে শেষ হয় এমন সকল ফাইল বের করে তার মধ্যে grep টুল দিয়ে “searchText” আছে কিনা খুঁজে দেখে। 
+
+
+
+
