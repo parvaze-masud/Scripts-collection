@@ -1,0 +1,355 @@
+###Configure Kubernetes On Premise Cluster:
+-------------------------------------------
+
+
+#Configure network:
+-----------------
+
+vi /etc/netplan/00-installer-config.yaml
+
+network:
+  ethernets:
+    ens33:
+      dhcp4: false
+      addresses: [192.168.44.139/24]
+      gateway4: 192.168.44.2
+      nameservers:
+        addresses: [8.8.8.8]
+  version: 2
+
+netplan apply
+
+#Add host record:
+-----------------
+
+vi /etc/hosts
+
+192.168.44.139  master
+192.168.44.140  node1
+
+
+
+# Disable swap:
+---------------
+
+vi /ete/fstab
+
+#/swap.img      none    swap    sw      0       0		# Add # before /swap.img
+
+mount -a
+
+#Create .Sh file to config cluster:
+----------------------------------
+
+vi ready_cluster.sh
+
+---------------------
+#Disable Swap Space
+sudo swapoff –a
+
+#Add these IP tables Rule:
+
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sudo sysctl --system
+
+#Installing docker:
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+sudo apt install docker-ce -y
+systemctl start docker
+systemctl enable docker
+systemctl daemon-reload
+
+
+#Installing Kubernetes
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt-get install kubeadm kubelet kubectl -y
+kubeadm version
+
+----------------
+
+chmod +x ready_cluster.sh
+./ready_cluster.sh
+
+#Troubleshoot: If occured any errror:
+-------------------------------------
+
+sudo rm /etc/containerd/config.toml
+sudo systemctl restart containerd
+
+
+#Install kubeadm in Master:
+--------------------------
+
+sudo kubeadm init
+
+#After that folow the instraction given below and in the end of kubeadm installation:
+-------------------------------------------------------------------------------------
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# copy that command from the end of kubeadm installation to Join worker Nodes:
+-----------------------------------------------------------------------
+sudo su -
+kubeadm join 192.168.179.155:6443 --token ajxtem.f8a28rx0axa85u1u --discovery-token-ca-cert-hash sha256:a76431af05baa06a01dd534f9df2a21c11286989e29737b214b46b8b5a8adc82
+
+
+#If occured any errror during join cluster run below command to the respective nodes:
+-------------------------------------------------------------------------------------
+rm /etc/containerd/config.toml
+systemctl restart containerd
+
+
+#Configure weavenet CNI plugin:
+---------------------------------
+
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+kubectl get pods -n kube-system
+
+
+[ Note: Run this command to reset cluster: kubeadm reset ]
+
+
+#commands for Kubectl autocomplete:
+-----------------------------------
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+alias k=kubectl
+complete -o default -F __start_kubectl k
+k get pods
+
+
+#Run Nginx Pod in master:
+-------------------------
+
+kubectl run nginx --image=nginx
+kubectl get svc
+
+#Expose nginx pod through NodePort service:
+-------------------------------------------
+
+kubectl expose pod nginx --name=nginx --type=NodePort --target-port=80 --port=80 -o yaml --dry-run=client >nginx_svc.yaml
+
+vi nginx_svc.yaml
+
+---------------
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    run: nginx
+  type: NodePort
+status:
+  loadBalancer: {}
+--------------------------
+
+kubectl apply -f nginx_svc.yaml
+kubectl get svc,ep
+
+#Browse Nginx Service Through any IP of the cluser:
+http://192.168.44.180:30000
+
+#create files to deploy bhw app:
+--------------------------------
+
+vi frontend.yaml
+-----------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend-pod
+    appname: bhw
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appname: bhw
+  template:
+    metadata:
+      labels:
+        appname: bhw
+    spec:
+      containers:
+      - image: iqbalkhan319/bhwapp:1.1
+        name: bhwapp
+
+-----------------
+
+vi frontend_svc.yaml
+------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30008
+  selector:
+    appname: bhw
+  type: NodePort
+
+------------------------
+
+vi backend.yaml
+------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend-pod
+      appname: bhw
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: backend-pod
+        appname: bhw
+    spec:
+      containers:
+      - image: mysql:8.0.31
+        name: mysql
+        envFrom:
+        - secretRef:
+            name: backend
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+--------------------
+
+vi backend_svc.yaml
+---------------------
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: default
+spec:
+  selector:
+    app: backend-pod
+    appname: bhw
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---------------------
+
+vi pv_pvc.yaml
+-----------------
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+-----------------
+
+vi secret.yaml
+--------------
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend
+  namespace: default
+type: Opaque
+stringData:
+  MYSQL_ROOT_PASSWORD: "keepitsecret"
+  MYSQL_RO0T_HOST: "%"
+  MYSQL_USER: "bhw"
+  MYSQL_PASSWORD: "Time@12345"
+  MYSQL_DATABASE: "bhw"
+--------------
+
+
+
+
+#Browse bhw app Through any IP of the cluser:
+http://192.168.44.180:30008
+
+
+
+#If you have problem with register user in app: Folow that.....
+-----------------------------------------------
+
+
+git clone https://github.com/iqbalkhan319/bhw.git
+
+cd bhw
+
+ll
+
+kubectl get pods
+
+#then copy backend pod name:
+------------------------------
+
+kubectl ecxec -it (backend pod name) -n defult --mysql -u root -pkeepitsecret bhw <SQL\ File/bhw.sql
+kubectl exec -it backend-676c775759-26b57 -n default -- mysql -u root -pkeepitsecret bhw <bhw.sql ##update
+
+
+
+#Now register the user and login into the webapp....
