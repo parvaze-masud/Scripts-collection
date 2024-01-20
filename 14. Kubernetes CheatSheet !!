@@ -1,0 +1,54 @@
+Kubernetes এর journey শুরু করা  নতুনদের জন্য একটু কঠিন হতে পারে। Journey টা যেন একটু সহজ হয় সেজন্য গুরুতপূর্ণ কিছু কমান্ড এবং তা কি কাজ করে নিচে দেওয়ার চেষ্টা করেছি। যদি কাজে লাগতে পারে মনে হয় তাহলে বুকমার্ক করে রাখতে পারেন.. 😀
+
+শুরু করা যাক…
+
+বেসিক Kubectl কমান্ড:
+
+* Get Resources: kubectl get pods/services/deployments
+- pods, services, অথবা deployments এর লিস্ট ও স্ট্যাটাস দেখায়।
+
+* Create Resource: kubectl create -f [config.yaml]
+- YAML ফাইল থেকে Pod/Service তৈরি করে.
+
+* Delete Resource: kubectl delete -f [config.yaml]
+- YAML ফাইলে বলে দেওয়া রিসোর্সটি ডিলিট করে দেয়.
+
+* Describe Resource: kubectl describe pod/service/deployment [name]
+- একটি স্পেসিফিক pod, service, or deployment সম্পর্কে বিস্তারিত তথ্য দেখায়।
+
+* Logs from a Container: kubectl logs [pod_name]
+- Pod এর লগ দেখায়।
+
+ Pod ম্যানেজম্যেন্ট:
+
+* Create Pod: kubectl run [pod_name] --image=[image_name]
+- ম্যানশন করা নাম এবং ইমেজ দিয়ে নতুন Pod তৈরি করে।
+
+* Expose Pod: kubectl expose pod [pod_name] --port=[external_port] --target-port=[container_port]
+- বলে দেওয়া Port এ কন্টেইনারটি এক্সপোস করে।
+
+* Execute Command in Pod: kubectl exec [pod_name] -- [command]
+- Pod এর ভিতর কোন কমান্ড চালানোর জন্য ব্যবহৃত হয় এই কমান্ড।
+
+Deployment and Scaling:
+
+* Create Deployment: kubectl create deployment [name] --image=[image]
+- কমান্ডে দেওয়া ইমেজ থেকে একটি Deployment তৈরি করে।
+
+* Scale Deployment: kubectl scale deployment [name] --replicas=[n]
+- Deployment কে scale করে রেপ্লিকাতে বলে দেওয়া নাম্বার পর্যন্ত।
+
+* Update Deployment: kubectl set image deployment/[name] [container_name]=[new_image]
+- Deployment এর ভিতরের কন্টেইনারের ইমেজ সেট করে দেয়।
+
+Namespaces and Contexts:
+
+* List Namespaces: kubectl get namespaces
+- Cluster মধ্যকার সকল namespaces দেখায়।
+
+* Switch Namespace: kubectl config set-context --current --namespace=[name]
+- Cluster এর ভিতর অন্য namespace এ যাওয়ার জন্য।
+
+* Set Default Namespace: kubectl config set-context $(kubectl config current-context) --namespace=[namespace]
+- ডিফল্ট namespace সেট করে বর্তমান Context এর জন্য।
+
