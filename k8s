@@ -34,7 +34,7 @@ BOOTSTRAPPING THE MASTER NODE (IN MASTER)
 kubeadm init
  
 
-COPY THE COMMAND TO RUN IN NODES & SAVE IN NOTEPAD
+COPY THE COMMAND TO RUN IN MASTER NODES & SAVE IN NOTEPAD
 
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
