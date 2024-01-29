@@ -1,0 +1,56 @@
+ডেভেলপমেন্ট এবং অপারেশনের ক্ষেত্রে অটোমেশনের বিকল্প নেই।  Ansible দিয়ে খুব সহজে বিভিন্ন ধরনের অটোমেশন করা যায়। এই অটোমেশনকে আরও সহজ করেছে Ansible এর অনেক অনেক Module এর সাপোর্ট।
+
+যেমনঃ
+
+1.File Module
+Purpose: ফাইল ও ফাইলের প্রোপার্টিজ ম্যানেজ করে। 
+উদাহরণঃ 
+- name: Ensure a file is present
+  ansible.builtin.file:
+    path: /etc/foo.conf
+    state: touch
+
+২। User Module
+Purpose: ইউজার ম্যানেজ করে
+উদাহরণঃ 
+- name: Create a new user
+  ansible.builtin.user:
+    name: jorina
+    comment: Jorina Begum
+
+৩। Yum Module
+Purpose: Yum প্যাকেজ ম্যানেজার দিয়ে প্যাকেজ ম্যানেজ করেউদাহরণঃ 
+- name: Install the latest version of Apache
+  ansible.builtin.yum:
+    name: httpd
+    state: latest
+
+৪। Apt Module
+Purpose: Apt প্যাকেজ ম্যানেজ করে 
+উদাহরণঃ  
+- name: Update and install vim
+  ansible.builtin.apt:
+    name: vim
+    state: latest
+    update_cache: yes
+
+৫। Copy Module
+Purpose: রিমোট ডাইরেক্টরিতে কপি করে 
+উদাহরণঃ 
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /src/dir/file.conf
+    dest: /dest/dir/file.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+৬। Service Module
+Purpose: সার্ভিস ম্যানেজ করে। 
+উদাহরণঃ 
+- name: Start service httpd, if not running
+  ansible.builtin.service:
+    name: httpd
+    state: started
+
+এরকম আরও অনেক মডিউল আছে Ansible-এর।
