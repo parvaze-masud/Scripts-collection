@@ -1,0 +1,30 @@
+aws athena সার্ভারলেস ভাবে s3 বাকেটে query করার জন্য অসাধারণ একটি টুল। এটির সাহায্যে সরাসরি s3 বাকেটে query করা যায় কোন ধরনের ETL প্রোসেস সেটাপ করা ছাড়াই।
+
+ধরুন আপনার একটি ইলাস্টিক লোড ব্যালেন্সার আছে, এটির লগ s3 বাকেটে স্টোর হয়। আপনার এই লগের ওপর query করা দরকার কোন একটি ট্রাফিক প্যাটার্ন বোঝার জন্য অথবা কোন একটি ইস্যু ট্রাবলশুট করার জন্য।
+
+আপনি aws athena তে একটি টেবিল তৈরি করে এই ডাটার উপর sql query করতে পারবেন। athena তে গিয়ে একটি টেবিল এভাবে তৈরি করা যেতে পারে।
+
+CREATE EXTERNAL TABLE IF NOT EXISTS alb_logs (
+type string,
+time string,
+elb string,
+client_ip string,
+target_ip string,
+request_processing_time double,
+target_processing_time double,
+response_processing_time double,
+elb_status_code string,
+target_status_code string,
+received_bytes bigint,
+sent_bytes bigint,
+request_verb string,
+request_url string,
+request_proto string,
+user_agent string,
+ssl_cipher string,
+ssl_protocol string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+'serialization.format' = '1', 'input.regex' = 'your-regex-pattern-here'
+) LOCATION 's3:// your-alb-logs-bucket/prefix/';
