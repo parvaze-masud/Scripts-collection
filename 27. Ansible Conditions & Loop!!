@@ -1,0 +1,64 @@
+মনে করেন, একজন ডেভঅপ্স হিসেবে আপনার কাছে ৫০টা ফ্রেশ ওয়েব-সার্ভার আছে। এই ৫০ টা সার্ভারের মধ্যে ২৫টা ডেভেলপমেন্ট সার্ভার এবং ২৫টা প্রোডাকশন সার্ভার।
+
+আপনার টাস্ক হচ্ছেঃ 
+১। সকল সার্ভারে NGINX ইন্সটল করা।  
+২। ডেভেলপমেন্টের জন্য একধরনের NGINX কনফিগ দেওয়া এবং প্রোডাকশনের জন্য আরেক ধরনের কনফিগ দেওয়া।
+৩। ডেভেলপমেন্ট সার্ভারগুলোতে ডেভেলপারদের SSH এক্সেস দেওয়া এবং প্রোডাকশনে ডেভঅপ্সদের এক্সেস দেওয়া।
+
+কাজগুলো খুব সহজ হলেও সার্ভারের সংখ্যা অনেক হওয়ার কারণে অনেক কাজ, এবং রিপেটিটিভ কাজ – বোরিং কাজ।
+
+এক্ষেত্রে সাহায্য করতে পারে Ansible এবং Ansible এর কন্ডিশন এবং লুপ।
+
+যেমনঃ 
+ 
+---
+- hosts: all
+  become: yes
+  vars:
+    dev_users:
+      - dev_user1
+      - dev_user2
+    prod_users:
+      - prod_user1
+      - prod_user2
+    nginx_conf_dir: "/etc/nginx"
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_os_family == "Debian"
+
+    - name: Copy Nginx configuration for development
+      copy:
+        src: "files/nginx_dev.conf"
+        dest: "{{ nginx_conf_dir }}/nginx.conf"
+      when: inventory_hostname in groups['development']
+
+    - name: Copy Nginx configuration for production
+      copy:
+        src: "files/nginx_prod.conf"
+        dest: "{{ nginx_conf_dir }}/nginx.conf"
+      when: inventory_hostname in groups['production']
+
+    - name: Ensure development users have SSH access
+      user:
+        name: "{{ item }}"
+        state: present
+        groups: "ssh-access"
+      loop: "{{ dev_users }}"
+      when: inventory_hostname in groups['development']
+
+    - name: Ensure production users have SSH access
+      user:
+        name: "{{ item }}"
+        state: present
+        groups: "ssh-access"
+      loop: "{{ prod_users }}"
+      when: inventory_hostname in groups['production']
+
+
+এখানে, ওএস ডেবিয়ান কিনা সেটি চেক করেছে “when” এর মাধ্যমে। ডেবিয়ান হলে apt দিয়ে nginx ইনস্টল করেছে। – কন্ডিশনাল অপারেশন।
+
+এবং ইউজার ম্যানেজম্যান্টের জন্য লুপ ব্যবহার করা হয়েছে। যদি প্রোডাকশন সার্ভার হয় তাহলে লুপ চালিয়ে প্রোডাকশন ইউজার লিস্ট থেকে ইউজার তৈরি করেছে।
