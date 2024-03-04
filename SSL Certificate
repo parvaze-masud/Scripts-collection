@@ -30,5 +30,20 @@ sudo apt install certbot python3-certbot-nginx
 7] Generate a free ssl for your website :-
 sudo certbot --nginx -d shivm04.xyz
 
-# Auto renew.
+# Auto renew 
+#Edit the Crontab File
 
+sudo crontab -e
+
+# Create a New Cron Job 
+#(This command creates a new cron job that runs the certbot renew command every 12 hours. The --quiet option instructs Certbot to remain silent unless there’s an error or a successful renewal. 
+#The --post-hook option specifies a command to be run after each successful renewal — in this use case, reloading the NGINX reservice to implement the new certificates.)
+
+0 */12 * * * /usr/bin/certbot renew --quiet --post-hook "systemctl reload nginx"
+
+#Save Changes and Exit
+In nano, you can save the changes by pressing Ctrl+0, then press Enter to confirm the filename, and finally Ctrl+X to exit the editor.
+
+# Verify the Cron Job
+
+sudo crontab -l
