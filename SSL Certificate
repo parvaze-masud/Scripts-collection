@@ -1,0 +1,29 @@
+1] In this viedo we will launch a new ec2 instance and on that we will install a nginx as a web server for hosting the website.
+2] Then fisrt we will run our webiste on 80 port without ssl certificate
+
+3] Then we will install certbot letsencrypt (free ssl certificate) for our website.
+
+4] Nginx installation command :- 
+apt update
+apt install nginx
+
+5] Nginx configration file for 80 :-
+server {
+listen 80;
+server_name shivm04.xyz; # Edit this to your domain name
+client_max_body_size 100M;
+ 
+  index index.html index.php;
+  root /var/www/html/shivm04.xyz/;  # change your code directory
+
+   access_log  /var/log/nginx/shivm04.xyz/access.log;           #Add ssl access log file on the server
+   error_log   /var/log/nginx/shivm04.xyz/error.log;             #Add ssl error log file on the server
+
+ }
+
+6] certbot install command :- 
+sudo apt update
+sudo apt install certbot python3-certbot-nginx
+
+7] Generate a free ssl for your website :-
+sudo certbot --nginx -d shivm04.xyz
