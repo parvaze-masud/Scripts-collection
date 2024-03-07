@@ -21,8 +21,11 @@ sudo apt install python3.9
 
 python3.9 --version
 
-# You should see the output indicating the version as 3.9.6. Additionally, the python3.9 command will be available for use.
+# Install python3-pip before install web3
 
+apt install python3-pip -y
+
+# You should see the output indicating the version as 3.9.6. Additionally, the python3.9 command will be available for use.
 # To install a specific version of the web3 library in Python, you can use pip, Python's package manager. Here's how to install version 6.15.1 of web3:
 
 pip install web3==6.15.1
