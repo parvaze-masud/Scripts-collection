@@ -1,0 +1,19 @@
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+source ~/.bashrc
+
+nvm --version
+
+nvm install 18
+
+node -v
+
+npm install -g pm2
+
+cd 
+
+npm i
+
+npm run build
+
+pm2 start
