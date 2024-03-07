@@ -1,0 +1,62 @@
+# Update your package list:
+
+sudo apt update
+# Install the necessary dependencies:
+
+sudo apt install software-properties-common
+
+# Add the deadsnakes PPA:
+
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+# Update your package list again:
+
+sudo apt update
+
+# Install Python 3.9.6:
+
+sudo apt install python3.9
+
+# After the installation, you can verify that Python 3.9.6 is installed by running:
+
+python3.9 --version
+
+# You should see the output indicating the version as 3.9.6. Additionally, the python3.9 command will be available for use.
+
+# To install a specific version of the web3 library in Python, you can use pip, Python's package manager. Here's how to install version 6.15.1 of web3:
+
+pip install web3==6.15.1
+
+# This command will install web3 version 6.15.1 and its dependencies. After installation, you can use web3 in your Python projects by importing it:
+
+import web3
+
+# Make sure you have pip installed, which usually comes pre-installed with Python. If not, you can install it using your package manager or by following the official documentation: https://pip.pypa.io/en/stable/installation/
+
+# To check the version of the web3 library installed in your Python environment, you can use pip itself. Here's how:
+
+pip show web3
+
+# This command will display detailed information about the installed web3 package, including its version.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
