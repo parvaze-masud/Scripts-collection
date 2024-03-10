@@ -43,23 +43,17 @@ pip show web3
 # This command will display detailed information about the installed web3 package, including its version.
 
 
+# Setup a python script as a service through systemctl/systemd
 
+vim blockchain.service
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[Unit]
+Description=blockchain service
+After=multi-user.target
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /opt/bcscript.py
+[Install]
+WantedBy=multi-user.target
 
