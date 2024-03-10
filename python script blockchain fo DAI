@@ -43,6 +43,14 @@ pip show web3
 
 # This command will display detailed information about the installed web3 package, including its version.
 
+# Collect script from developer and create a file
+
+vim bcscript.py
+
+# The permissions of the bcscript.py file should be set to allow the user running the service to execute it.
+
+chmod +x /opt/bcscript.py
+
 
 # Setup a python script as a service through systemctl/systemd
 
@@ -57,4 +65,23 @@ Restart=always
 ExecStart=/usr/bin/python3 /opt/bcscript.py
 [Install]
 WantedBy=multi-user.target
+
+# Save the content you've provided into a file, for example, blockchain.service.
+# Place this file in the /etc/systemd/system/ directory.
+# Reload systemd to read the new service:
+
+sudo systemctl daemon-reload
+
+# sudo systemctl start blockchain
+
+sudo systemctl start blockchain
+
+# Start and enable the service:
+
+sudo systemctl enable blockchain
+
+# Check the status to ensure it's running without errors:
+
+sudo systemctl status blockchain
+
 
