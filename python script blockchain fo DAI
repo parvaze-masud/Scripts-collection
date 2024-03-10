@@ -1,6 +1,7 @@
 # Update your package list:
 
 sudo apt update
+
 # Install the necessary dependencies:
 
 sudo apt install software-properties-common
