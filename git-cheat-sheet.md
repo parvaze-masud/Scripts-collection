@@ -1,6 +1,6 @@
 # Git All Commands
 ----------------------
-#Initialized
+## Initialized
 ```
 git init
 git config --global user.email "parvazemd.masud@gmail.com"
