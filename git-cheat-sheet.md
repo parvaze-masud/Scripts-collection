@@ -11,12 +11,16 @@ git remote add origin https://github.com/parvaze-masud/java-web-application.git
 git push -u origin main                          
 ```
 
-##Check Git info and set new url ##
+## Check Git info and set a new URL
+```
 git config --list    #For check details info
 git remote -v            #view code owner
 git remote set-url origin https://github.com/parvaze-masud/java-web-application.git  #to change the origin URL to a new remote repository on GitHub
-
+```
+# Git clone from a specific
+```
 git clone -b my-feature-branch https://git-codecommit.us-east-1.amazonaws.com/v1/repos/my-repo
+```
 
 ##Restore Fill ##
 -----------------
