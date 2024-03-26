@@ -5,10 +5,10 @@
 ''git init
 git config --global user.email "parvazemd.masud@gmail.com"
 git config --global user.name "parvaze"
-git add .		#Prepare for move from working area to staging area
+git add .
 git commit -m "first commit"
 git remote add origin https://github.com/parvaze-masud/java-web-application.git
-git push -u origin main''                              
+git push -u origin main''                             
 
 ##Check Git info and set new url ##
 git config --list    #For check details info
