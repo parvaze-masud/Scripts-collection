@@ -9,3 +9,9 @@ docker stop 40a1adaefed8 && docker rm 40a1adaefed8
 
 #Container Access
 docker exec -it 0dd54d8cca38 /bin/bash
+
+#Remove all Stopped Container
+docker rm $(docker ps -a -q)
+
+#After exit containter it automatic delete
+docker run -it --rm image-name
