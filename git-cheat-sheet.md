@@ -2,7 +2,7 @@
 ----------------------
 #Initialized
 
-''git init
+''git init''
 git config --global user.email "parvazemd.masud@gmail.com"
 git config --global user.name "parvaze"
 git add .
