@@ -1,11 +1,11 @@
 # Video Link: https://www.youtube.com/watch?v=-R9y09eOzoQ
 
-1] In this viedo we will launch a new ec2 instance and on that we will install a nginx as a web server for hosting the website.
-2] Then fisrt we will run our webiste on 80 port without ssl certificate
+1] In this video we will launch a new ec2 instance and on that we will install a nginx as a web server for hosting the website.
+2] Then first we will run our website on 80 ports without SSL certificate
 
-3] Then we will install certbot letsencrypt (free ssl certificate) for our website.
+3] Then we will install certbot lets-encrypt (free SSL certificate) for our website.
 
-4] Nginx installation command :- 
+4] Nginx installation command:- 
 apt update
 apt install nginx
 
