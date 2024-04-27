@@ -49,7 +49,7 @@ sudo apt install certbot python3-certbot-nginx
 ```
 ## Generate a free SSL for your website:-
 ```
-sudo certbot --nginx -d explorer.devlovedai.com
+sudo certbot --nginx -d rpc.devolvedai.com
 ```
 # Auto renew 
 #Edit the Crontab File
