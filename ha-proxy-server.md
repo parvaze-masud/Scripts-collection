@@ -195,6 +195,6 @@ If we shut down or stop the apache server on Appnode2 then it will return the 50
 Error as it does not have any active server to forward the request to.  
 Now to check the status of the requests we can access the stats from the application, 
 Go to devops.csl.com/stats and use the username and password that we provided in the proxy file, 
-which is user: admin pass: iqbal@321 in this case 
+which is user: admin pass: prg@1234 in this case 
 It will show a stat dashboard you can see how many requests are in the queue, how many sessions it has 
 served, denied, errors etc.  
