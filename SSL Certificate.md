@@ -39,8 +39,10 @@ server {
         root /usr/share/nginx/html;
     }
 }
+```
 
-
+```
+sudo ln -s /etc/nginx/sites-available/expotest.devolvedai.com.conf /etc/nginx/sites-enabled/expotest.devolvedai.com.conf
 ```
 ## certbot install command :- 
 ```
