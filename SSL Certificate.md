@@ -47,7 +47,7 @@ sudo ln -s /etc/nginx/sites-available/expotest.devolvedai.com.conf /etc/nginx/si
 ## certbot install command :- 
 ```
 sudo apt update
-sudo apt install certbot python3-certbot-nginx
+sudo apt install certbot python3-certbot-nginx -y
 ```
 ## Generate a free SSL for your website:-
 ```
